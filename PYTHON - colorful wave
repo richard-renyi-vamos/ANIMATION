@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# Define the size of the figure and the data
+fig, ax = plt.subplots(figsize=(10, 5))
+x = np.linspace(0, 2 * np.pi, 200)
+y = np.sin(x)
+
+# Define the color map and set the initial color
+cmap = plt.get_cmap('rainbow')
+color = cmap(0)
+
+# Define the animation function
+def animate(i):
+    global color
+    ax.clear()
+    ax.plot(x, y * np.sin(i / 10), color=color)
+    color = cmap(i/100)
+    ax.set_ylim(-1, 1)
+    ax.set_title('Colorful Wave Animation')
+
+# Create the animation
+ani = FuncAnimation(fig, animate, frames=200, interval=20, blit=False)
+
+# Show the animation
+plt.show()
+
+# CREATED WITH THE HELP OF OPEN AI CHAT-GPT: https://chat.openai.com/chat   ☺
