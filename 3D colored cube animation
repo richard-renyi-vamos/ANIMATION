@@ -1,0 +1,75 @@
+import pygame
+from pygame.locals import *
+from OpenGL.GL import *
+from OpenGL.GLU import *
+import numpy as np
+
+# Define the vertex and color data for the face
+vertices = np.array([
+    [-1, -1,  1],
+    [ 1, -1,  1],
+    [ 1,  1,  1],
+    [-1,  1,  1],
+    [-1, -1, -1],
+    [ 1, -1, -1],
+    [ 1,  1, -1],
+    [-1,  1, -1]
+])
+
+colors = np.array([
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+    [1, 1, 0],
+    [1, 0, 1],
+    [0, 1, 1],
+    [1, 1, 1],
+    [0, 0, 0]
+])
+
+# Define the faces of the cube
+faces = np.array([
+    [0, 1, 2, 3],
+    [1, 5, 6, 2],
+    [5, 4, 7, 6],
+    [4, 0, 3, 7],
+    [3, 2, 6, 7],
+    [4, 5, 1, 0]
+])
+
+# Define the initial rotation angles for the cube
+angleX = 0
+angleY = 0
+
+def draw_cube():
+    glBegin(GL_QUADS)
+    for i, face in enumerate(faces):
+        glColor3fv(colors[i])
+        for vertex in face:
+            glVertex3fv(vertices[vertex])
+    glEnd()
+
+def main():
+    pygame.init()
+    display = (800, 600)
+    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
+
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+
+    glTranslatef(0.0, 0.0, -5)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        glRotatef(1, 1, 1, 1)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        draw_cube()
+        pygame.display.flip()
+        pygame.time.wait(10)
+
+main()
+
+# CREATED WITH THE HELP OF OPEN AI CHAT-GPT: https://chat.openai.com/chat
