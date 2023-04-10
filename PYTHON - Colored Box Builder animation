@@ -1,0 +1,41 @@
+import turtle
+import random
+
+# Define the function to draw a box
+def draw_box(size, depth):
+    if depth == 0:
+        turtle.color('white', random.choice(['red', 'orange', 'yellow', 'green', 'blue', 'purple']))
+        turtle.begin_fill()
+        for i in range(4):
+            turtle.forward(size)
+            turtle.left(90)
+        turtle.end_fill()
+    else:
+        draw_box(size / 2, depth - 1)
+        turtle.forward(size / 2)
+        draw_box(size / 2, depth - 1)
+        turtle.backward(size / 2)
+        turtle.left(90)
+        turtle.forward(size / 2)
+        turtle.right(90)
+        draw_box(size / 2, depth - 1)
+        turtle.left(90)
+        turtle.backward(size / 2)
+        turtle.right(90)
+        turtle.backward(size / 2)
+        draw_box(size / 2, depth - 1)
+        turtle.forward(size / 2)
+
+# Set up the turtle window
+turtle.setup(width=800, height=800)
+turtle.speed(0)
+turtle.penup()
+turtle.goto(-200, -200)
+turtle.pendown()
+
+# Draw the fractal
+draw_box(400, 5)
+
+# Hide the turtle cursor and keep the window open until manually closed
+turtle.hideturtle()
+turtle.done()
