@@ -1,0 +1,33 @@
+import curses
+import random
+import time
+
+def main(stdscr):
+    curses.curs_set(0)  # Hide the cursor
+    stdscr.nodelay(1)  # Make getch() non-blocking
+    stdscr.timeout(100)  # Refresh every 100 milliseconds
+
+    # Initialize screen dimensions
+    sh, sw = stdscr.getmaxyx()
+
+    # Generate a list of random columns for each raindrop
+    columns = [random.randint(0, sw - 1) for _ in range(sh)]
+
+    while True:
+        stdscr.clear()
+
+        # Move each raindrop down and wrap around if it reaches the bottom
+        for i in range(sh):
+            stdscr.addch(i, columns[i], '|')
+            columns[i] = (columns[i] + 1) % sw
+
+        stdscr.refresh()
+        time.sleep(0.1)
+
+        # Exit the loop if the user presses any key
+        if stdscr.getch() != -1:
+            break
+
+curses.wrapper(main)
+
+# CHAT-GPT assisted code
