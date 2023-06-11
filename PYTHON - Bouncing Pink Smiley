@@ -1,0 +1,59 @@
+import pygame
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the window
+window_width = 800
+window_height = 600
+window = pygame.display.set_mode((window_width, window_height))
+pygame.display.set_caption("Bouncing Ball")
+
+# Colors
+PINK = (255, 105, 180)
+WHITE = (255, 255, 255)
+
+# Ball properties
+ball_radius = 10  # Smaller ball size
+ball_pos = [window_width // 2, window_height // 2]
+ball_velocity = [random.randint(-5, 5), random.randint(-5, 5)]
+
+# Load the smiley face image
+smiley_image = pygame.image.load("smiley.png")  # Replace "smiley.png" with your image file path
+
+# Main game loop
+running = True
+while running:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Update ball position
+    ball_pos[0] += ball_velocity[0]
+    ball_pos[1] += ball_velocity[1]
+
+    # Bounce the ball off the walls
+    if ball_pos[0] < ball_radius or ball_pos[0] > window_width - ball_radius:
+        ball_velocity[0] *= -1
+    if ball_pos[1] < ball_radius or ball_pos[1] > window_height - ball_radius:
+        ball_velocity[1] *= -1
+
+    # Clear the window
+    window.fill(WHITE)
+
+    # Draw the ball
+    pygame.draw.circle(window, PINK, ball_pos, ball_radius)
+
+    # Draw the smiley face image
+    smiley_rect = pygame.Rect(ball_pos[0] - ball_radius, ball_pos[1] - ball_radius, ball_radius * 2, ball_radius * 2)
+    window.blit(smiley_image, smiley_rect)
+
+    # Update the display
+    pygame.display.flip()
+
+# Quit the game
+pygame.quit()
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
