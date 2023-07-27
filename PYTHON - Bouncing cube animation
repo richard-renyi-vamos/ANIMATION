@@ -1,0 +1,50 @@
+import pygame
+import sys
+
+pygame.init()
+
+# Set up the screen
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Bouncing Cube")
+
+# Colors
+WHITE = (255, 255, 255)
+
+# Cube properties
+cube_size = 50
+cube_pos = [WIDTH // 2 - cube_size // 2, HEIGHT // 2 - cube_size // 2]
+speed_x, speed_y = 5, 5
+
+# Main game loop
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Move the cube
+    cube_pos[0] += speed_x
+    cube_pos[1] += speed_y
+
+    # Bounce the cube when it reaches the screen boundaries
+    if cube_pos[0] <= 0 or cube_pos[0] >= WIDTH - cube_size:
+        speed_x = -speed_x
+
+    if cube_pos[1] <= 0 or cube_pos[1] >= HEIGHT - cube_size:
+        speed_y = -speed_y
+
+    # Clear the screen
+    screen.fill(WHITE)
+
+    # Draw the cube
+    pygame.draw.rect(screen, (0, 0, 0), (cube_pos[0], cube_pos[1], cube_size, cube_size))
+
+    # Update the display
+    pygame.display.update()
+
+    # Set the frames per second
+    pygame.time.Clock().tick(60)
+
+
+# CREATED WITH THE HELP OF OPEN-AI CHAT GPT: https://chat.openai.com/chat
